@@ -47,13 +47,21 @@ const bookStore = (set) => ({
   incrementKorz: () => set((state) => ({ korz: state.korz + 1 })),
   decrementKorz: () => set((state) => ({ korz: state.korz - 1 })),
   massivKorz: [],
-  setMassive: (id) =>
+  setMassiveKorz: (id) =>
     set((state) => {
       const product = state.products.find((item) => item.id === id);
       if (product) {
-        const isInKorz = state.massivKorz.some((item) => item.id === id);
-        if (!isInKorz) {
-          return { massivKorz: [...state.massivKorz, product] };
+        const newArr = state.massivKorz.find((item) => item.id === id);
+        if (newArr) {
+          return {
+            massivKorz: state.massivKorz.map((item) =>
+              item.id === id ? { ...item, count: item.count + 1 } : item
+            ),
+          };
+        } else {
+          return {
+            massivKorz: [...state.massivKorz, { ...product, count: 1 }],
+          };
         }
       }
       return state;
@@ -63,12 +71,70 @@ const bookStore = (set) => ({
     set((state) => {
       const product = state.products.find((item) => item.id === id);
       if (product) {
-        const isInKorz = state.massivKorzLike.some((item) => item.id === id);
-        if (!isInKorz) {
-          return { massivKorzLike: [...state.massivKorzLike, product] };
+        const newArr = state.massivKorzLike.find((item) => item.id === id);
+        if (newArr) {
+          return {
+            massivKorzLike: state.massivKorzLike.map((item) =>
+              item.id === id ? { ...item, count: item.count + 1 } : item
+            ),
+          };
+        } else {
+          return {
+            massivKorzLike: [...state.massivKorzLike, { ...product, count: 1 }],
+          };
         }
       }
       return state;
+    }),
+  coutPlusLike: (id) =>
+    set((state) => {
+      return {
+        massivKorzLike: state.massivKorzLike.map((item) =>
+          item.id === id ? { ...item, count: item.count + 1 } : item
+        ),
+      };
+    }),
+
+  coutMinusLike: (id) =>
+    set((state) => {
+      return {
+        massivKorzLike: state.massivKorzLike.map((item) =>
+          item.id === id && item.count > 1
+            ? { ...item, count: item.count - 1 }
+            : item
+        ),
+      };
+    }),
+  coutPlusKorz: (id) =>
+    set((state) => {
+      return {
+        massivKorz: state.massivKorz.map((item) =>
+          item.id === id ? { ...item, count: item.count + 1 } : item
+        ),
+      };
+    }),
+
+  coutMinusKorz: (id) =>
+    set((state) => {
+      return {
+        massivKorz: state.massivKorz.map((item) =>
+          item.id === id && item.count > 1
+            ? { ...item, count: item.count - 1 }
+            : item
+        ),
+      };
+    }),
+  deletiItemLike: (id) =>
+    set((state) => {
+      return {
+        massivKorzLike: state.massivKorzLike.filter((item) => item.id !== id),
+      };
+    }),
+  deletiItemKorz: (id) =>
+    set((state) => {
+      return {
+        massivKorz: state.massivKorz.filter((item) => item.id !== id),
+      };
     }),
 });
 
