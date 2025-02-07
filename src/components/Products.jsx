@@ -1,15 +1,8 @@
 import useBookStore from "../store/book-store";
 
 function Products() {
-  const {
-    incrementLike,
-    korz,
-    incrementKorz,
-    massivKorz,
-    setMassive,
-    massivKorzLike,
-    setMassiveLike,
-  } = useBookStore();
+  const { incrementLike, incrementKorz, setMassiveKorz, setMassiveLike } =
+    useBookStore();
   const products = [
     {
       title: "Televizor Hisense 58E4K Smart",
@@ -69,8 +62,7 @@ function Products() {
                 <svg
                   onClick={() => {
                     incrementKorz();
-                    setMassive(item.id);
-                    console.log(massivKorz);
+                    setMassiveKorz(item.id);
                   }}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -124,7 +116,6 @@ function Products() {
                   onClick={() => {
                     incrementLike();
                     setMassiveLike(item.id);
-                    console.log(massivKorzLike);
                   }}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -196,18 +187,6 @@ function Products() {
             </ul>
           );
         })}
-        <ul>
-          <p>Savatchadagi maxsulotlar {massivKorz.length}</p>
-          {massivKorz.map((item) => {
-            return <li key={item.id}>{item.title}</li>;
-          })}
-        </ul>
-        <ul>
-          <p>Sevimlidagi maxsulotlar {massivKorzLike.length}</p>
-          {massivKorzLike.map((item) => {
-            return <li key={item.id}>{item.title}</li>;
-          })}
-        </ul>
       </div>
     </>
   );
