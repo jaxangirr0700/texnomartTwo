@@ -33,6 +33,16 @@ const bookStore = (set) => ({
       id: 5,
     },
   ],
+
+  productId: null,
+
+  search: "",
+
+  cash: false,
+  setCash: () => set((state) => ({ cash: true })),
+  setCashClose: () => set((state) => ({ cash: false })),
+
+  payment: true,
   katalog: false,
   katalofn: () => set((state) => ({ katalog: !state.katalog })),
   language: "O'Z",

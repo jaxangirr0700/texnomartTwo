@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Flex, Modal } from "antd";
 import useBookStore from "../store/book-store";
-import { DeleteFilled } from "@ant-design/icons";
+import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
 import ModalCard from "./ModalCard";
+import ModalCardKorz from "./ModalcardKorz";
+import Loader from "./Loader";
+import axios from "axios";
 
 const Modall = () => {
   const [openLike, setOpenLike] = useState(false);
@@ -16,7 +19,28 @@ const Modall = () => {
     deletiItemKorz,
     coutPlusKorz,
     coutMinusKorz,
+    productId,
   } = useBookStore();
+  const [productsModal, setProductsModal] = useState([]);
+  const [loader, setLoader] = useState(true);
+
+  useEffect(() => {
+    const axiosProduct = async () => {
+      try {
+        const response = await axios.get(
+          "https://gw.texnomart.uz/api/web/v1/home/special-products?type=hit_products"
+        );
+        setProductsModal(response.data.data.data);
+        // console.log(response.data.data.data);
+      } catch (err) {
+        setError(err + "API da XATO");
+      } finally {
+        setLoader(false);
+      }
+    };
+    axiosProduct();
+  }, []);
+  if (loader) return <Loader />;
   return (
     <Flex gap="middle" align="center">
       {/* Basic */}
@@ -189,8 +213,36 @@ const Modall = () => {
         onCancel={() => setOpenKorz(false)}
         width={1000}
       >
-        {" "}
-        <div className="flex items-center justify-between gap-5">
+        <div className="flex items-center justify-between">
+          {productsModal
+            .filter((item) => item.id === productId)
+            .map((item) => (
+              <div key={item.id} className="mb-4 flex">
+                <div className="flex items-center gap-4 rounded-2xl border border-slate-200 w-full px-5 py-3 shadow-sm hover:shadow-md transition-shadow duration-300">
+                  <img
+                    className="w-20 h-20 object-cover rounded"
+                    src={item.image}
+                    alt={item.name}
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-lg font-semibold">{item.name}</span>
+                    <p className="text-gray-600">{item.sale_price} So'm</p>
+                  </div>
+                  <Button
+                    type="dashed"
+                    danger
+                    icon={<DeleteFilled />}
+                    className="mt-2"
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            ))}
+
+          <ModalCardKorz />
+        </div>
+        {/* <div className="flex items-center justify-between gap-5">
           <ul className="flex flex-col gap-2">
             <p>
               {" "}
@@ -239,8 +291,8 @@ const Modall = () => {
               );
             })}
           </ul>
-          {massivKorz.length > 0 ? <ModalCard /> : <></>}
-        </div>
+          {massivKorz.length > 0 ? <ModalCardKorz /> : <></>}
+        </div> */}
       </Modal>
     </Flex>
   );

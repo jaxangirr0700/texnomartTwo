@@ -7,7 +7,7 @@ function Navbar() {
   const language = useBookStore((state) => state.language);
   const toggleLanguage = useBookStore((state) => state.toggleLanguage);
 
-
+  const state = useBookStore();
 
   const kotigories = [
     {
@@ -82,7 +82,6 @@ function Navbar() {
         <div className="w-[1440px] m-auto flex justify-between items-center text-white">
           <div className="flex justify-between items-center">
             <a href="" className="flex items-center mr-5">
-              {" "}
               <img src={locImg} className="w-10"></img>Tashkent
             </a>
             <div className="flex gap-5">
@@ -238,7 +237,11 @@ function Navbar() {
           <input
             type="text"
             placeholder="Search"
-            className="w-full px-3 border-0"
+            value={state.search}
+            onChange={(e) => {
+              useBookStore.setState({ search: e.currentTarget.value });
+            }}
+            className="w-full px-3 border-0 outline-0"
           />
         </div>
 

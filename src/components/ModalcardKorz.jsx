@@ -1,9 +1,8 @@
 import React from "react";
 import useBookStore from "../store/book-store";
 
-function ModalCard() {
-  const productPrice = 9779000;
-  const { massivKorzLike, cash, setCash, setCashClose } = useBookStore();
+function ModalCardKorz() {
+  const { massivKorz, cash, setCash, setCashClose } = useBookStore();
 
   return (
     <div className=" w-96 mx-auto bg-white shadow-lg rounded-lg p-5">
@@ -32,7 +31,7 @@ function ModalCard() {
       </div>
 
       {cash
-        ? massivKorzLike.map((item) => {
+        ? massivKorz.map((item) => {
             return (
               <div key={item.id}>
                 <div className="flex  justify-between items-center mb-4">
@@ -49,13 +48,13 @@ function ModalCard() {
               </div>
             );
           })
-        : massivKorzLike.map((item) => {
+        : massivKorz.map((item) => {
             return (
               <div key={item.id}>
                 <div className="flex  justify-between items-center mb-4">
                   <p className="text-gray-700">Muddatli to'lov:</p>
                   <p className="font-semibold text-lg">
-                    {Math.floor((item.price * item.count * 1.2) / 24)} so'm x
+                    {Math.floor((item.price * item.count * 1.5) / 24)} so'm x
                   </p>
                 </div>
                 <p className="font-bold">
@@ -74,4 +73,4 @@ function ModalCard() {
   );
 }
 
-export default ModalCard;
+export default ModalCardKorz;
