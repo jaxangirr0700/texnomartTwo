@@ -3,10 +3,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   margin: 0;
   background: #fff;
   overflow: hidden;
+  position: absolute;
+  left: 50%;
+  top: 400px;
+  z-index: -1;
 }
 
 .atom {
