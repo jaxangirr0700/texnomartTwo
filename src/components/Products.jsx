@@ -6,62 +6,58 @@ import Loader from "./Loader";
 import { Link } from "react-router";
 
 function Products() {
-  const {
-    incrementLike,
-    incrementKorz,
-    setMassiveKorz,
-    setMassiveLike,
-    search,
-    productId,
-  } = useBookStore();
+  const [child, setChild] = useState([]);
+  // const { incrementLike, setMassiveLike } = useBookStore();
   const state = useBookStore();
+  const [products, setProducts] = useState([]);
 
-  const products = [
-    {
-      title: "Televizor Hisense 58E4K Smart",
-      price: 7499000,
-      img: "https://avatars.mds.yandex.net/i?id=90cd3d7999c0eeb1c9a414e914f54c76165a59d0-10752752-images-thumbs&n=13",
-
-      id: 1,
-    },
-    {
-      title: "Havo namlagich Xiaomi Humidifier 2 Litr EU",
-      price: 524000,
-      img: "https://avatars.mds.yandex.net/i?id=af92155b2d950a1875d58886406cdc5dbfab282c-9583697-images-thumbs&n=13",
-      id: 2,
-    },
-
-    {
-      title: "Televizor LG 65UR78006LB Smart",
-      price: 10900000,
-      img: "https://avatars.mds.yandex.net/i?id=3e2c52ec53a88773994561617657dc532288a217-5314793-images-thumbs&n=13",
-      id: 3,
-    },
-    {
-      title: "Muzlatgich Haier C2F536CWRG",
-      price: 9299000,
-      img: "https://avatars.mds.yandex.net/i?id=68ada5771ce3664410437e650c8016c782c0da27-12433518-images-thumbs&n=13",
-      id: 4,
-    },
-    {
-      title: "Mikroto'lqinli pech Hanasa AM720THMWH",
-      price: 740000,
-      img: "https://avatars.mds.yandex.net/i?id=316f5748a16d33581f77ded3d93cb853c0eaef9d-8438571-images-thumbs&n=13",
-      id: 5,
-    },
-  ];
-
-  const { productss, fetchProducts, isLoading } = useBookStore();
+  // const { productss, fetchProducts, isLoading } = useBookStore();
   // console.log(productss);
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    axios
+      .get("https://gw.texnomart.uz/api/web/v1/header/popup-menu-catalog")
+      .then((res) => {
+        // console.log(res.data.data.data);
+        setChild(res.data.data.data);
+      });
+  }, []);
 
-  if (isLoading) return <Loader />;
+  useEffect(() => {
+    axios
+      .get(
+        `https://gw.texnomart.uz/api/web/v1/home/special-products?type=hit_products`
+      )
+      .then((res) => {
+        setProducts(res.data.data.data);
+        // console.log(res.data.data.data);
+      });
+  }, []);
+
+  // if (isLoading) return <Loader />;
   return (
     <>
-      <div className="max-w-[1440px] mx-auto grid grid-cols-5 gap-5 p-4">
+      <div className="flex justify-between items-center">
+        {child.map((item, index) => {
+          return (
+            <div
+              key={index}
+              className="flex items-center hover:scale-110 border-2 border-slate-50 hover:border-yellow-500  rounded-xl active:scale-95 transition-all 0.3s"
+            >
+              <div className="flex flex-col items-center gap-2 text-center font-bold">
+                {" "}
+                <img
+                  className="w-20 h-20 rounded-xl overflow-auto"
+                  src={item.icon}
+                  alt="Photo"
+                />
+                <span>{item.name}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {/* <div className="max-w-[1440px] mx-auto grid grid-cols-5 gap-5 p-4">
         {products
           .filter((item) => {
             return item.title
@@ -217,29 +213,32 @@ function Products() {
               </ul>
             );
           })}
-      </div>
+      </div> */}
       <div className="grid grid-cols-5 gap-5">
-        {productss.map((item, index) => (
-          <Link to={`/product/${item.id}`} key={index}>
+        {products.map((item, index) => {
+          // console.log(item);
+          return (
             <ul
               key={index}
               className="flex flex-col gap-3 px-4 pt-2 pb-10 border border-gray-200 rounded-2xl text-xl font-bold hover:scale-105 active:scale-100 transition-all duration-500 relative"
               onClick={() => {
-                useBookStore.setState({ ...state, productId: item.id });
-                console.log(productId);
+                // useBookStore.setState({ ...state, productId: item.id });
+                // console.log(productId);
               }}
             >
               <li>
-                <img
-                  className="h-60 object-cover"
-                  src={item.image}
-                  alt={item.name}
-                />
+                <Link to={`/product/${item.id}`} key={index}>
+                  <img
+                    className="h-60 object-cover"
+                    src={item.image}
+                    alt={item.name}
+                  />
+                </Link>
               </li>
               <li>{item.name}</li>
               <li>
-                <span className="bg-slate-200 rounded-2xl px-2 py-1">
-                  {item.axiom_monthly_price} So'm / 24 oyga
+                <span className="bg-slate-200 rounded-2xl text-sm px-2 py-1">
+                  {item.axiom_monthly_price}
                 </span>
               </li>
               <li className="flex items-center justify-between pr-4">
@@ -369,8 +368,8 @@ function Products() {
                 </svg>
               </li>
             </ul>
-          </Link>
-        ))}
+          );
+        })}
       </div>
     </>
   );

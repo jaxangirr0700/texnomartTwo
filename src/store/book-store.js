@@ -2,23 +2,11 @@ import axios from "axios";
 import { create } from "zustand";
 
 const bookStore = (set) => ({
-  productId: 3900000,
+  productId: 356579,
   productss: [],
   isLoading: false,
   error: null,
 
-  fetchProducts: async () => {
-    set({ isLoading: true, error: null });
-    try {
-      const response = await axios.get(
-        "https://gw.texnomart.uz/api/web/v1/home/special-products?type=hit_products"
-      );
-      set({ productss: response.data.data.data, isLoading: false });
-    } catch (error) {
-      set({ isLoading: false, error: error.message });
-      console.error("Failed to fetch products:", error);
-    }
-  },
   products: [
     {
       title: "Televizor Hisense 58E4K Smart",
@@ -52,13 +40,13 @@ const bookStore = (set) => ({
     },
   ],
 
-  productId: null,
+  // productId: null,
 
   search: "",
 
   cash: false,
-  setCash: () => set((state) => ({ cash: true })),
-  setCashClose: () => set((state) => ({ cash: false })),
+  setCash: () => set(() => ({ cash: true })),
+  setCashClose: () => set(() => ({ cash: false })),
 
   payment: true,
   katalog: false,

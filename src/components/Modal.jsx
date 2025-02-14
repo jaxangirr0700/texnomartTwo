@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Button, Flex, Modal } from "antd";
 import useBookStore from "../store/book-store";
 import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
@@ -10,40 +10,55 @@ import axios from "axios";
 const Modall = () => {
   const [openLike, setOpenLike] = useState(false);
   const [openKorz, setOpenKorz] = useState(false);
+  const [prod, setProd] = useState([]);
+
   const {
     massivKorz,
     massivKorzLike,
     coutPlusLike,
     coutMinusLike,
     deletiItemLike,
-    deletiItemKorz,
-    coutPlusKorz,
-    coutMinusKorz,
+    setMassiveKorz,
     productId,
   } = useBookStore();
+
+  const state = useBookStore();
   const [productsModal, setProductsModal] = useState([]);
   const [loader, setLoader] = useState(true);
+  const [error, setError] = useState(true);
 
   useEffect(() => {
-    const axiosProduct = async () => {
-      try {
-        const response = await axios.get(
-          "https://gw.texnomart.uz/api/web/v1/home/special-products?type=hit_products"
-        );
-        setProductsModal(response.data.data.data);
-        // console.log(response.data.data.data);
-      } catch (err) {
-        setError(err + "API da XATO");
-      } finally {
-        setLoader(false);
-      }
-    };
-    axiosProduct();
+    axios
+      .get(
+        `https://gw.texnomart.uz/api/web/v1/home/special-products?type=hit_products`
+      )
+      .then((res) => {
+        // console.log(res.data.data.data);
+        useBookStore.setState({ massivKorz: res.data.data.data });
+      });
   }, []);
-  if (loader) return <Loader />;
+
+  // useEffect(() => {
+  //   const axiosProduct = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://gw.texnomart.uz/api/web/v1/home/special-products?type=hit_products"
+  //       );
+  //       setProductsModal(response.data.data.data);
+  //       // console.log(response.data.data.data);
+  //     } catch (err) {
+  //       setError(err + "API da XATO");
+  //     } finally {
+  //       setLoader(false);
+  //     }
+  //   };
+  //   axiosProduct();
+  // }, []);
+  // if (loader) return <Loader />;
+  // console.log(massivKorz);
+
   return (
     <Flex gap="middle" align="center">
-      {/* Basic */}
       <Button type="text">
         <span className=" flex flex-col items-center gap-1">
           <svg
@@ -215,7 +230,9 @@ const Modall = () => {
       >
         <div className="flex items-center justify-between">
           {productsModal
-            .filter((item) => item.id === productId)
+            .filter((item) => {
+              return item.id == 356066;
+            })
             .map((item) => (
               <div key={item.id} className="mb-4 flex">
                 <div className="flex items-center gap-4 rounded-2xl border border-slate-200 w-full px-5 py-3 shadow-sm hover:shadow-md transition-shadow duration-300">
@@ -240,59 +257,65 @@ const Modall = () => {
               </div>
             ))}
 
-          <ModalCardKorz />
+          {/* <ModalCardKorz /> */}
         </div>
-        {/* <div className="flex items-center justify-between gap-5">
+        <div className="flex items-center justify-between gap-5">
           <ul className="flex flex-col gap-2">
             <p>
-              {" "}
               {massivKorz.length > 0
                 ? massivKorz.length + "ta mahsulot"
                 : "Hozircha mahsulot yo'q"}
             </p>
-            {massivKorz.map((item) => {
-              return (
-                <li
-                  key={item.id}
-                  className="flex items-center justify-between gap-5 border border-slate-200 px-3 py-2 rounded-xl hover:scale-101 transition-all 0.5s"
-                >
-                  <div className="flex gap-3">
-                    <img className="w-14" src={item.img} alt="" />
-                    <span>
-                      {item.title}{" "}
-                      <p className="flex gap-5 border border-slate-200 w-fit px-2 py-1 rounded-xl">
-                        <button
-                          onClick={() => {
-                            coutPlusKorz(item.id);
-                          }}
-                        >
-                          +
-                        </button>
-                        {item.count}
-                        <button
-                          onClick={() => {
-                            coutMinusKorz(item.id);
-                          }}
-                        >
-                          -
-                        </button>
-                      </p>
-                    </span>
-                  </div>
-                  <Button
-                    type="dashed"
-                    danger
-                    icon={<DeleteFilled />}
-                    onClick={() => {
-                      deletiItemKorz(item.id);
-                    }}
-                  ></Button>
-                </li>
-              );
-            })}
+            {massivKorz
+              .filter((i) => {
+                console.log(i);
+                console.log(productId);
+
+                return i.id == 356579;
+              })
+              .map((item) => {
+                return (
+                  <li
+                    key={item.id}
+                    className="flex items-center justify-between gap-5 border border-slate-200 px-3 py-2 rounded-xl hover:scale-101 transition-all 0.5s"
+                  >
+                    <div className="flex gap-3">
+                      <img className="w-14" src={item.image} alt="" />
+                      <span>
+                        {item.name}{" "}
+                        <p className="flex gap-5 border border-slate-200 w-fit px-2 py-1 rounded-xl">
+                          <button
+                            onClick={() => {
+                              coutPlusKorz(item.id);
+                            }}
+                          >
+                            +
+                          </button>
+                          {item.all_count}
+                          <button
+                            onClick={() => {
+                              coutMinusKorz(item.id);
+                            }}
+                          >
+                            -
+                          </button>
+                        </p>
+                      </span>
+                    </div>
+                    <Button
+                      type="dashed"
+                      danger
+                      icon={<DeleteFilled />}
+                      onClick={() => {
+                        deletiItemKorz(item.id);
+                      }}
+                    ></Button>
+                  </li>
+                );
+              })}
           </ul>
           {massivKorz.length > 0 ? <ModalCardKorz /> : <></>}
-        </div> */}
+        </div>
       </Modal>
     </Flex>
   );

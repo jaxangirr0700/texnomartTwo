@@ -1,6 +1,9 @@
 import locImg from "../../imgs/location.png";
 import useBookStore from "../store/book-store";
 import Modall from "./Modal";
+import TopCatigories from "./TopCatigories";
+import { Link } from "react-router";
+
 function Navbar() {
   const katalog = useBookStore((state) => state.katalog);
   const katalofn = useBookStore((state) => state.katalofn);
@@ -147,12 +150,13 @@ function Navbar() {
           </div>
         </div>
       </nav>
+
       <div className="w-[1440px] m-auto flex justify-between items-center pt-5 pb-5">
         <div className="flex items-center gap-10 ">
           {" "}
-          <a href="https://texnomart.uz/uz/" className="text-4xl font-bold ">
+          <Link to={"/"} className="text-4xl font-bold ">
             Texnomart*
-          </a>
+          </Link>
           <button
             onClick={() => {
               katalofn();
@@ -249,6 +253,8 @@ function Navbar() {
           <Modall />
         </div>
       </div>
+      <TopCatigories />
+      {/* 
       <div className="w-[1440px] m-auto flex justify-between gap-2 items-center pt-5 pb-5">
         {kotigories.map((item) => {
           return (
@@ -262,7 +268,7 @@ function Navbar() {
             </a>
           );
         })}
-      </div>
+      </div> */}
     </>
   );
 }
