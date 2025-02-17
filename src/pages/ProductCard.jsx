@@ -1,24 +1,24 @@
 import { useParams } from "react-router";
-import Loader from "./Loader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useBookStore from "../store/book-store";
+import Loader from "../components/loaderr/Loader";
+import { Button } from "antd";
+import SimilarProducts from "../components/SimilarProducts";
 
 function ProductCard() {
   const [imgIndex, setImgIndex] = useState(0);
   const params = useParams();
   const [product, setProduct] = useState();
   const { cash, setCash, setCashClose } = useBookStore();
+  const state = useBookStore();
 
-  // console.log(params);
-
-  // https:gw.texnomart.uz/api/web/v1/home/recently-viewed-products
   useEffect(() => {
     axios
       .get(`https://gw.texnomart.uz/api/web/v1/product/detail?id=${params.id}`)
       .then((res) => {
         setProduct(res.data.data.data);
-        console.log(res.data.data.data);
+        // console.log(res.data.data.data);
       });
   }, [params.id]);
 
@@ -29,9 +29,6 @@ function ProductCard() {
       </div>
     );
   }
-
-  // console.log(product);
-  // console.log(params.id);
 
   return (
     <>
@@ -78,6 +75,14 @@ function ProductCard() {
                 <span>Loan order </span>{" "}
                 <span> {product.is_can_loan_order} </span>
               </p>
+              <Button
+                onClick={() => {
+                  state.addSavatcha(product);
+                  console.log(state.savatcha);
+                }}
+              >
+                Savagtcha
+              </Button>
             </div>
           </div>
         ) : (
@@ -152,6 +157,7 @@ function ProductCard() {
           <div></div>
         )}
       </div>
+      <SimilarProducts productId={params.id}></SimilarProducts>
     </>
   );
 }

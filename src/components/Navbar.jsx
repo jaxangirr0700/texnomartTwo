@@ -81,7 +81,7 @@ function Navbar() {
   ];
   return (
     <>
-      <nav className=" bg-gray-600  w-[100vw]">
+      <nav className=" bg-gray-800  w-[100vw]">
         <div className="w-[1440px] m-auto flex justify-between items-center text-white">
           <div className="flex justify-between items-center">
             <a href="" className="flex items-center mr-5">

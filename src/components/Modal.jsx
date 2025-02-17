@@ -4,8 +4,9 @@ import useBookStore from "../store/book-store";
 import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
 import ModalCard from "./ModalCard";
 import ModalCardKorz from "./ModalcardKorz";
-import Loader from "./Loader";
+import Loader from "./loaderr/Loader";
 import axios from "axios";
+import NavRightButtons from "./navRightButtons";
 
 const Modall = () => {
   const [openLike, setOpenLike] = useState(false);
@@ -18,7 +19,6 @@ const Modall = () => {
     coutPlusLike,
     coutMinusLike,
     deletiItemLike,
-    setMassiveKorz,
     productId,
   } = useBookStore();
 
@@ -38,28 +38,10 @@ const Modall = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   const axiosProduct = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "https://gw.texnomart.uz/api/web/v1/home/special-products?type=hit_products"
-  //       );
-  //       setProductsModal(response.data.data.data);
-  //       // console.log(response.data.data.data);
-  //     } catch (err) {
-  //       setError(err + "API da XATO");
-  //     } finally {
-  //       setLoader(false);
-  //     }
-  //   };
-  //   axiosProduct();
-  // }, []);
-  // if (loader) return <Loader />;
-  // console.log(massivKorz);
-
   return (
     <Flex gap="middle" align="center">
-      <Button type="text">
+      <NavRightButtons>
+        {" "}
         <span className=" flex flex-col items-center gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -84,37 +66,39 @@ const Modall = () => {
           </svg>
           Kirish
         </span>
-      </Button>
-      <Button type="text" onClick={() => setOpenLike(true)}>
-        <span className=" absolute right-[-10px] top-[-20px] text-white bg-yellow-500 px-2 py-1 rounded-full ">
-          {massivKorzLike.length > 0 ? massivKorzLike.length : ""}
-        </span>
-        <span className=" flex flex-col items-center gap-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width={24}
-            height={24}
-            color={"#000000"}
-            fill={"none"}
-          >
-            <path
-              d="M12 21C10.6588 21 9.88572 20.4278 8.33953 19.2834C0.221721 13.2749 1.01807 6.15294 4.53744 3.99415C7.21909 2.34923 9.55962 3.01211 10.9656 4.06801C11.5422 4.50096 11.8304 4.71743 12 4.71743C12.1696 4.71743 12.4578 4.50096 13.0344 4.06801C14.4404 3.01211 16.7809 2.34923 19.4626 3.99415C21.1812 5.04838 22.2505 7.28623 21.9494 10"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M14 18C14 18 15 18 16 20C16 20 19.1765 15 22 14"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          Sevimlilar
-        </span>
-      </Button>
+      </NavRightButtons>
+      <NavRightButtons>
+        <div onClick={() => setOpenLike(true)}>
+          <span className=" absolute right-[-10px] top-[-20px] text-white bg-yellow-500 px-2 py-1 rounded-full ">
+            {massivKorzLike.length > 0 ? massivKorzLike.length : ""}
+          </span>
+          <span className=" flex flex-col items-center gap-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width={24}
+              height={24}
+              color={"#000000"}
+              fill={"none"}
+            >
+              <path
+                d="M12 21C10.6588 21 9.88572 20.4278 8.33953 19.2834C0.221721 13.2749 1.01807 6.15294 4.53744 3.99415C7.21909 2.34923 9.55962 3.01211 10.9656 4.06801C11.5422 4.50096 11.8304 4.71743 12 4.71743C12.1696 4.71743 12.4578 4.50096 13.0344 4.06801C14.4404 3.01211 16.7809 2.34923 19.4626 3.99415C21.1812 5.04838 22.2505 7.28623 21.9494 10"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M14 18C14 18 15 18 16 20C16 20 19.1765 15 22 14"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Sevimlilar
+          </span>
+        </div>
+      </NavRightButtons>
       <Modal
         title="Sevimlidagi mahsulotlar"
         centered
@@ -164,62 +148,64 @@ const Modall = () => {
           {massivKorzLike.length > 0 ? <ModalCard /> : <></>}
         </div>
       </Modal>
+      <NavRightButtons>
+        <div onClick={() => setOpenKorz(true)}>
+          <span className=" absolute right-[-10px] top-[-20px] text-white bg-yellow-500 px-2 py-1 rounded-full ">
+            {massivKorz.length > 0 ? massivKorz.length : ""}
+          </span>
+          <span className=" flex flex-col items-center gap-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width={24}
+              height={24}
+              color={"#000000"}
+              fill={"none"}
+            >
+              <path
+                d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M6 6H22"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <circle
+                cx="6"
+                cy="20"
+                r="2"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+              <circle
+                cx="17"
+                cy="20"
+                r="2"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M8 20L15 20"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              <path
+                d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+            Savatcha
+          </span>
+        </div>
+      </NavRightButtons>
 
-      <Button type="text" onClick={() => setOpenKorz(true)}>
-        <span className=" absolute right-[-10px] top-[-20px] text-white bg-yellow-500 px-2 py-1 rounded-full ">
-          {massivKorz.length > 0 ? massivKorz.length : ""}
-        </span>
-        <span className=" flex flex-col items-center gap-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width={24}
-            height={24}
-            color={"#000000"}
-            fill={"none"}
-          >
-            <path
-              d="M8 16L16.7201 15.2733C19.4486 15.046 20.0611 14.45 20.3635 11.7289L21 6"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M6 6H22"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-            <circle
-              cx="6"
-              cy="20"
-              r="2"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            />
-            <circle
-              cx="17"
-              cy="20"
-              r="2"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            />
-            <path
-              d="M8 20L15 20"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-            <path
-              d="M2 2H2.966C3.91068 2 4.73414 2.62459 4.96326 3.51493L7.93852 15.0765C8.08887 15.6608 7.9602 16.2797 7.58824 16.7616L6.63213 18"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
-          Savatcha
-        </span>
-      </Button>
       <Modal
         title="Savatchadagi maxsulotlar"
         centered
@@ -268,8 +254,8 @@ const Modall = () => {
             </p>
             {massivKorz
               .filter((i) => {
-                console.log(i);
-                console.log(productId);
+                // console.log(i);
+                // console.log(productId);
 
                 return i.id == 356579;
               })

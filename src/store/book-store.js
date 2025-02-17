@@ -7,6 +7,42 @@ const bookStore = (set) => ({
   isLoading: false,
   error: null,
 
+  savatcha: [],
+  addSavatcha: (item) =>
+    set((state) => {
+      const bomi = state.savatcha.find((f) => {
+        return f.product.id === item.id;
+      });
+      if (bomi) {
+        return {
+          savatcha: state.savatcha.map((i) => {
+            return i.product.id === item.id ? { ...i, count: i.count + 1 } : i;
+          }),
+        };
+      } else {
+        return {
+          savatcha: [...state.savatcha, { count: 1, product: item }],
+        };
+      }
+    }),
+  sevimli: [],
+  addSevimli: (item) =>
+    set((state) => {
+      const bomi = state.savatcha.find((f) => {
+        return f.product.id === item.id;
+      });
+      if (bomi) {
+        return {
+          savatcha: state.savatcha.map((i) => {
+            return i.product.id === item.id ? { ...i, count: i.count + 1 } : i;
+          }),
+        };
+      } else {
+        return {
+          savatcha: [...state.savatcha, { count: 1, product: item }],
+        };
+      }
+    }),
   products: [
     {
       title: "Televizor Hisense 58E4K Smart",

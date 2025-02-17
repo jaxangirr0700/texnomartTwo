@@ -2,17 +2,13 @@ import { Alert } from "antd";
 import useBookStore from "../store/book-store";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loader from "./Loader";
+import Loader from "../components/loaderr/Loader";
 import { Link } from "react-router";
 
 function Products() {
   const [child, setChild] = useState([]);
-  // const { incrementLike, setMassiveLike } = useBookStore();
   const state = useBookStore();
   const [products, setProducts] = useState([]);
-
-  // const { productss, fetchProducts, isLoading } = useBookStore();
-  // console.log(productss);
 
   useEffect(() => {
     axios
@@ -216,14 +212,13 @@ function Products() {
       </div> */}
       <div className="grid grid-cols-5 gap-5">
         {products.map((item, index) => {
-          // console.log(item);
           return (
             <ul
               key={index}
               className="flex flex-col gap-3 px-4 pt-2 pb-10 border border-gray-200 rounded-2xl text-xl font-bold hover:scale-105 active:scale-100 transition-all duration-500 relative"
               onClick={() => {
-                // useBookStore.setState({ ...state, productId: item.id });
-                // console.log(productId);
+                state.addSavatcha(item);
+                console.log(state.savatcha);
               }}
             >
               <li>
