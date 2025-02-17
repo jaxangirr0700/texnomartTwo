@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Loader from "../components/loaderr/Loader";
-import CatalogButtons from "../components/catalogButtons";
 import SortButtons from "../components/Buttons/SortButtons";
 import useBookStore from "../store/book-store";
 import { Link } from "react-router";
