@@ -29,8 +29,6 @@ function CatalogPage() {
       });
   }, [params.slug, currentPage, currentName]);
 
-  // console.log(prod);
-
   if (!products) {
     return (
       <div>

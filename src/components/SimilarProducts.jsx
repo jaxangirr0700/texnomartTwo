@@ -33,7 +33,7 @@ function SimilarProducts({ productId }) {
         <h1>Acsesuarlar</h1>
         <ul className="flex gap-3 items-center">
           {acsesuars.map((a, index) => {
-            console.log(a);
+            // console.log(a);
 
             return (
               <li key={a.name}>
