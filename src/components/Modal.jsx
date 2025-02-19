@@ -6,7 +6,7 @@ import ModalCard from "./ModalCard";
 import ModalCardKorz from "./ModalcardKorz";
 import Loader from "./loaderr/Loader";
 import axios from "axios";
-import NavRightButtons from "./navRightButtons";
+import NavRightButtons from "./NavRightButtons";
 
 const Modall = () => {
   const [openLike, setOpenLike] = useState(false);
@@ -27,7 +27,7 @@ const Modall = () => {
   const [loader, setLoader] = useState(true);
   const [error, setError] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => { 
     axios
       .get(
         `https://gw.texnomart.uz/api/web/v1/home/special-products?type=hit_products`
