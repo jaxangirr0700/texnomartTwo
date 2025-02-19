@@ -7,6 +7,8 @@ const bookStore = (set) => ({
   isLoading: false,
   error: null,
 
+  currentSort: "price",
+
   savatcha: [],
   addSavatcha: (item) =>
     set((state) => {
