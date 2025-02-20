@@ -15,9 +15,9 @@ function SimilarProducts({ productId }) {
         `https://gw.texnomart.uz/api/web/v1/product/accessories?id=${productId}`
       )
       .then((res) => {
-        console.log(res.data.data.data);
+        // console.log(res.data.data.data);
         setAcsesuars(res.data.data.data);
-        console.log(acsesuars);
+        // console.log(acsesuars);
       })
       .catch((err) => {
         console.log(err);

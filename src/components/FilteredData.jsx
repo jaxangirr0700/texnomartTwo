@@ -23,9 +23,9 @@ function FilteredData({ filter }) {
               <>
                 <div>
                   {qisqartma === false && item.values.length > 10
-                    ? item.values.slice(0, 10).map((i) => {
+                    ? item.values.slice(0, 10).map((i, index) => {
                         return (
-                          <div>
+                          <div key={index}>
                             <div key={i.id}>
                               <div className="pt-4 pb-2 hover:gray-blue-700 ">
                                 <Checkbox>{i.value}</Checkbox>
@@ -36,8 +36,8 @@ function FilteredData({ filter }) {
                       })
                     : item.values.map((i) => {
                         return (
-                          <div>
-                            <div key={i.id}>
+                          <div key={i.id}>
+                            <div>
                               <div className="pt-4 pb-2 hover:text-gray-700 ">
                                 <Checkbox>{i.value}</Checkbox>
                               </div>

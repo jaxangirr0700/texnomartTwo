@@ -24,7 +24,7 @@ function CatalogPage() {
       .then((res) => {
         // console.log(res.data.data.pagination);
         setProd(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       })
       .catch((err) => {
         console.log(`${page} Xato ${err}`);
